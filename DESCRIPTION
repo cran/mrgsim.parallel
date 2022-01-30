@@ -1,7 +1,7 @@
 Package: mrgsim.parallel
 Type: Package
 Title: Simulate with 'mrgsolve' in Parallel
-Version: 0.1.1
+Version: 0.2.0
 Author: Kyle Baron
 Maintainer: Kyle Baron <kylebtwin@imap.cc>
 Description: Simulation from an 'mrgsolve' 
@@ -10,16 +10,16 @@ Description: Simulation from an 'mrgsolve'
     mclapply() or future_lapply() 
     <https://cran.r-project.org/package=future.apply>.
 License: GPL (>= 2)
-Imports: parallel, dplyr, future.apply
+Imports: parallel, dplyr, future, future.apply, callr, fst
 Depends: mrgsolve, R (>= 3.5.0)
-Suggests: testthat
+Suggests: testthat, arrow, qs, knitr, rmarkdown
 Encoding: UTF-8
-LazyData: true
 URL: https://github.com/kylebaron/mrgsim.parallel
 BugReports: https://github.com/kylebaron/mrgsim.parallel/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
+VignetteBuilder: knitr
 Language: en-US
 NeedsCompilation: no
-Packaged: 2020-07-06 12:10:36 UTC; kyleb
+Packaged: 2022-01-30 06:00:25 UTC; kyleb
 Repository: CRAN
-Date/Publication: 2020-07-06 15:30:02 UTC
+Date/Publication: 2022-01-30 06:10:02 UTC

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+<meta name="date" content="2022-01-30" />
+
+<title>Get started</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Get started</h1>
+<h4 class="author"></h4>
+<h4 class="date">2022-01-30</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="#simulate-a-data-set"><span class="toc-section-number">2</span> Simulate a data set</a></li>
+<li><a href="#simulate-idata-with-event"><span class="toc-section-number">3</span> Simulate idata with event</a></li>
+<li><a href="#simulate-in-the-background"><span class="toc-section-number">4</span> Simulate in the background</a></li>
+<li><a href="#tools"><span class="toc-section-number">5</span> Tools</a></li>
+<li><a href="#file-streams"><span class="toc-section-number">6</span> File streams</a></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>mrgsim.parallel provides parallelized simulation workflows for use with mrgsolve models. Input data sets are chunked into lists and simulated in parallel using multiple new R sessions (new R processes started to handle each chunk) or forked R sessions (R processes forked from the current R process). This implies some not-insignificant overhead for the parallelization and therefore this strategy will only speed up problems with some size or complexity to them; you will see little performance gain and possibly some slowdown by trying to parallelize problems that are smaller or run very fast to begin with.</p>
+<p>Because this vignette is embedded in the mrgsim.parallel R package, the code here must run fairly quickly. Even problems where there is a large speed up from parallelization might still take too much time to include in a package vignette. Therefore, we will mainly stick to examples of a much smaller scope. These examples are probably not big enough to see a tremendous performance gain; that is not the point. We simply want to illustrate the workflows to get you started simulating in parallel on appropriately-sized problems.</p>
+</div>
+<div id="simulate-a-data-set" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Simulate a data set</h1>
+<p>In this section, we will create a data set and then simulate it with and without parallelization.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mrgsim.parallel)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<p>We’ll simulate 100 subjects receiving each of 3 dose levels</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand.ev</span>(<span class="at">amt =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>), <span class="at">ID =</span> <span class="fu">seq</span>(<span class="dv">100</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(data, amt)</span></code></pre></div>
+<pre><code>.   amt   n
+. 1 100 100
+. 2 200 100
+. 3 300 100</code></pre>
+<p>using the mrgsolve house model</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">house</span>(<span class="at">end =</span> <span class="dv">72</span>)</span></code></pre></div>
+<p>It is probably most efficient to just simulate this in one go</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>outx <span class="ot">&lt;-</span> <span class="fu">mrgsim_d</span>(mod, data, <span class="at">output =</span> <span class="st">&quot;df&quot;</span>)</span></code></pre></div>
+<p>Here, we’ve called on <code>mrgsolve:::mrgsim_d()</code>, which takes the model object (<code>mod</code>) as the first argument and a data set (<code>data</code>) as the second argument.</p>
+<p>mrgsim provides two parallelized versions of this function, one using a backend provided by the <code>parallel</code> package and another which taps the <code>fuure</code> and future.apply` packages for the parallel backend.</p>
+<p>For platform independent parallelization, use <code>fu_mrgsim_d()</code> (<code>fu</code> stands for <code>future</code>) after setting the desired <code>plan()</code> for parallelization. For example, we can use <code>future::multisession</code> with 2 workers</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>future<span class="sc">::</span><span class="fu">plan</span>(future<span class="sc">::</span>multisession, <span class="at">workers =</span> 2L)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">fu_mrgsim_d</span>(mod, data, <span class="at">.seed =</span> <span class="dv">123</span>, <span class="at">nchunk =</span> <span class="dv">6</span>)</span></code></pre></div>
+<p>Because the problem is so small, this would actually take longer to run than the non-parallelized version.</p>
+<p>If you are on <code>macos</code> or <code>unix</code> operating system, you can parallelize using forked R processes. This generally runs much faster than <code>future::multisession</code>, which requires new R processes to be started up.</p>
+<p><code>mc_mrgsim_d()</code> will parallelize this simulation using forked processes using the parallel package</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">mc_mrgsim_d</span>(mod, data, <span class="at">mc.cores =</span> <span class="dv">2</span>, <span class="at">.seed =</span> <span class="dv">123</span>,  <span class="at">nchunk =</span> <span class="dv">6</span>)</span></code></pre></div>
+<p>Or this can be run using <code>fu_mrgsim_d()</code> with <code>future::multicore</code>, which also will parallelize across forked R processes</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>future<span class="sc">::</span><span class="fu">plan</span>(future<span class="sc">::</span>multicore)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">fu_mrgsim_d</span>(mod, data, <span class="at">.seed =</span> <span class="dv">123</span>, <span class="at">nchunk =</span> <span class="dv">6</span>)</span></code></pre></div>
+<p>R processes cannot be forked on the Windows operating system, so you cannot parallelize with <code>mc_mrgsim_d()</code> or <code>fu_mrgsim_d()</code> + <code>plan(multicore)</code> on Windows.</p>
+</div>
+<div id="simulate-idata-with-event" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Simulate idata with event</h1>
+<p>The other workflow that provided is similar to <code>mrgsolve::mrgsim_ei()</code>, which simulates an <code>idata_set</code> with an event object. For example, we create an event object</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">ev</span>(<span class="at">amt =</span> <span class="dv">100</span>, <span class="at">ii =</span> <span class="dv">24</span>, <span class="at">addl =</span> <span class="dv">27</span>)</span></code></pre></div>
+<p>and then a data frame with individual level parameters (in this case, we’ll simulate a bunch of weights)</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>idata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">WT =</span> <span class="fu">runif</span>(<span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">140</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(idata)</span></code></pre></div>
+<pre><code>.         WT
+. 1 93.81797
+. 2 45.57529
+. 3 46.62538
+. 4 50.94845
+. 5 42.16565
+. 6 75.81365</code></pre>
+<p>Then simulate</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">mrgsim_ei</span>(mod, e, idata)</span></code></pre></div>
+<p>This already runs very fast. But let’s parallelize it anyway. First, use <code>fu_mrgsim_ei()</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>future<span class="sc">::</span><span class="fu">plan</span>(future<span class="sc">::</span>multisession, <span class="at">workers =</span> 2L)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">fu_mrgsim_ei</span>(mod, e, idata,<span class="at">.seed =</span> <span class="dv">123</span>, <span class="at">nchunks =</span> <span class="dv">6</span>)</span></code></pre></div>
+<p>Or if you are on <code>macos</code> or <code>unix</code> operating system, use <code>mc_mrgsim_ei()</code> to invoke multicore parallelization provided by <code>parallel</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">mc_mrgsim_ei</span>(mod, e, idata, <span class="at">.seed =</span> <span class="dv">123</span>, <span class="at">nchunks =</span> <span class="dv">6</span>, <span class="at">mc.cores =</span> <span class="dv">2</span>)</span></code></pre></div>
+</div>
+<div id="simulate-in-the-background" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Simulate in the background</h1>
+<p>To simulate in the “background”, we first launch another R process using <code>callr::r_bg()</code> and run a chunked simulation in that R process. Because it is in the background, we can get the R prompt back and query the simulation process. Once the process is done, we can collect the result. Let’s run an example.</p>
+<p>The function is <code>bg_mrgsim_d()</code>. Like <code>mc_mrgsim_d()</code>, we have to pass in the model object and a data set</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">bg_mrgsim_d</span>(mod, data, <span class="at">nchunk =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>Because this simulation is run in a package vignette, we’ll use the default of waiting for the simulation to finish. Once it is done, we have a process object that tells us the simulation is “done”.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>out</span></code></pre></div>
+<pre><code>. PROCESS &#39;R&#39;, finished.</code></pre>
+<p>To collect the result, run</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> out<span class="sc">$</span><span class="fu">get_result</span>()</span></code></pre></div>
+<p>And we have a list of simulated data</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(sims)</span></code></pre></div>
+<pre><code>. [1] 2</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sims[[<span class="dv">1</span>]])</span></code></pre></div>
+<pre><code>.   ID time       GUT     CENT     RESP       DV       CP
+. 1  1 0.00   0.00000  0.00000 50.00000 0.000000 0.000000
+. 2  1 0.00 100.00000  0.00000 50.00000 0.000000 0.000000
+. 3  1 0.25  74.08182 25.74883 48.68223 1.287441 1.287441
+. 4  1 0.50  54.88116 44.50417 46.18005 2.225208 2.225208
+. 5  1 0.75  40.65697 58.08258 43.61333 2.904129 2.904129
+. 6  1 1.00  30.11942 67.82976 41.37943 3.391488 3.391488</code></pre>
+<p>For very large simulations, we can write the simulated output to a data “locker” on disk and then read it in later. We’ll call the locker <code>foo</code> in the <code>tempdir()</code></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>locker <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;foo&quot;</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">bg_mrgsim_d</span>(mod, data, <span class="at">.locker =</span> locker, <span class="at">nchunk =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p>Now, the output isn’t simulated data but file names where the data are stored</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> out<span class="sc">$</span><span class="fu">get_result</span>()</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>files</span></code></pre></div>
+<pre><code>. [[1]]
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/foo/bg-1-4.fst&quot;
+. 
+. [[2]]
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/foo/bg-2-4.fst&quot;
+. 
+. [[3]]
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/foo/bg-3-4.fst&quot;
+. 
+. [[4]]
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/foo/bg-4-4.fst&quot;</code></pre>
+<p>We can read the data back in with <code>fst::read_fst()</code></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fst)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">lapply</span>(files, read_fst)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sims[[<span class="dv">2</span>]])</span></code></pre></div>
+<pre><code>.   ID time       GUT     CENT     RESP       DV       CP
+. 1 76 0.00   0.00000  0.00000 50.00000 0.000000 0.000000
+. 2 76 0.00 100.00000  0.00000 50.00000 0.000000 0.000000
+. 3 76 0.25  74.08182 25.74883 48.68223 1.287441 1.287441
+. 4 76 0.50  54.88116 44.50417 46.18005 2.225208 2.225208
+. 5 76 0.75  40.65697 58.08258 43.61333 2.904129 2.904129
+. 6 76 1.00  30.11942 67.82976 41.37943 3.391488 3.391488</code></pre>
+<p>Or use the internalize helper which returns a single data frame by default</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">internalize_fst</span>(locker)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sims)</span></code></pre></div>
+<pre><code>. # A tibble: 6 × 7
+.      ID  time   GUT  CENT  RESP    DV    CP
+.   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+. 1     1  0      0     0    50    0     0   
+. 2     1  0    100     0    50    0     0   
+. 3     1  0.25  74.1  25.7  48.7  1.29  1.29
+. 4     1  0.5   54.9  44.5  46.2  2.23  2.23
+. 5     1  0.75  40.7  58.1  43.6  2.90  2.90
+. 6     1  1     30.1  67.8  41.4  3.39  3.39</code></pre>
+<p>The background workflow simulates each chunk sequentially by default. We can also parallelize this simulation by specifying a <code>.plan</code></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">bg_mrgsim_d</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  mod, </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  data, </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">nchunk =</span> <span class="dv">4</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">.plan =</span> <span class="st">&quot;multisession&quot;</span>, </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">.locker =</span> locker, </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">.cores =</span> <span class="dv">2</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">internalize_fst</span>(locker)</span></code></pre></div>
+</div>
+<div id="tools" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Tools</h1>
+<p>mrgsim.parallel also provides several tools that can make these workflows easier.</p>
+<p>To chunk a data frame by rows, use <code>chunk_by_row()</code></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">i =</span> <span class="fu">seq</span>(<span class="dv">10</span>))</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">chunk_by_row</span>(data, <span class="at">nchunk =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>The result is a list of data frames with the corresponding number of chunks</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(data_list)</span></code></pre></div>
+<pre><code>. [1] 2</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>data_list[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>.     i
+. 6   6
+. 7   7
+. 8   8
+. 9   9
+. 10 10</code></pre>
+<p>Similarly, use <code>chunk_by_id()</code> which will look at a <em>single</em> column and chunk based on those values</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8789</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;a&quot;</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">&quot;b&quot;</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">&quot;c&quot;</span>, <span class="dv">2</span>), <span class="fu">rep</span>(<span class="st">&quot;d&quot;</span>, <span class="dv">5</span>)))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>data</span></code></pre></div>
+<pre><code>.    id
+. 1   a
+. 2   a
+. 3   a
+. 4   a
+. 5   b
+. 6   b
+. 7   b
+. 8   c
+. 9   c
+. 10  d
+. 11  d
+. 12  d
+. 13  d
+. 14  d</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">chunk_by_id</span>(data, <span class="at">id_col =</span> <span class="st">&quot;id&quot;</span>, <span class="at">nchunk =</span> <span class="dv">2</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>data_list[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>.    id
+. 8   c
+. 9   c
+. 10  d
+. 11  d
+. 12  d
+. 13  d
+. 14  d</code></pre>
+</div>
+<div id="file-streams" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> File streams</h1>
+<p>There is another set of tools that help you systematically save large simulation outputs to disk in a format that can be quickly and flexibly read back in later. This workflow is called <code>file stream</code> and is described in another vignette.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+<meta name="date" content="2022-01-30" />
+
+<title>File Stream Workflow</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">File Stream Workflow</h1>
+<h4 class="author"></h4>
+<h4 class="date">2022-01-30</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="#file-stream-basics"><span class="toc-section-number">2</span> File stream basics</a></li>
+<li><a href="#use-file-stream-to-create-a-data-set-on-disk"><span class="toc-section-number">3</span> Use file stream to create a data set on disk</a></li>
+<li><a href="#alternate-better-file-formats"><span class="toc-section-number">4</span> Alternate (better) file formats</a></li>
+<li><a href="#manipulating-file-streams"><span class="toc-section-number">5</span> Manipulating file streams</a></li>
+<li><a href="#pass-objects-via-file-stream"><span class="toc-section-number">6</span> Pass objects via file stream</a></li>
+<li><a href="#the-locker-system"><span class="toc-section-number">7</span> The locker system</a>
+<ul>
+<li><a href="#safety-considerations"><span class="toc-section-number">7.1</span> Safety considerations</a>
+<ul>
+<li><a href="#versions"><span class="toc-section-number">7.1.1</span> Versions</a></li>
+<li><a href="#prevent-reset"><span class="toc-section-number">7.1.2</span> Prevent reset</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>File streams are objects you can create to help in organizing larger simulations which are naturally broken in to a series of smaller simulations. One example is a set of replicate simulations which are performed as a part of simulation-based model checking. Another example would be a large number of doses which need to be evaluated in a population context. In this case, one <em>very</em> large data set is assembled and then broken into <code>chunks</code> to be simulated in parallel. In both cases, it is assumed that the outputs (and maybe the inputs) are very large and would benefit from an extra layer of organization, including a consideration of how the simulations are stored on disk and accessed at a later time.</p>
+<p>The emphasis in these use cases is better management of very large simulation outputs. However, given this is a package vignette, we will illustrate the setup and implementation with problems of a (much) smaller scale.</p>
+</div>
+<div id="file-stream-basics" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> File stream basics</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mrgsim.parallel)</span></code></pre></div>
+<p>In the simplest use case, we might want to simulate some large number of replicates. We can start to manage this simulation by creating a file stream</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">10</span>)</span></code></pre></div>
+<p>This creates a file stream, which is just a list with one position representing each replicate that we want to do</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x)</span></code></pre></div>
+<pre><code>. [1] 10</code></pre>
+<p>Each slot holds another list containing information for the <code>ith</code> replicate. Looking at replicate 5 we have</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">5</span>]]</span></code></pre></div>
+<pre><code>. $i
+. [1] 5
+. 
+. $file
+. [1] &quot;05-10&quot;
+. 
+. $x
+. [1] 5
+. 
+. attr(,&quot;file_set_item&quot;)
+. [1] TRUE</code></pre>
+<p>There are three named positions</p>
+<ol style="list-style-type: decimal">
+<li><code>i</code> the replicate number</li>
+<li><code>file</code> the stem of the output file for this replicate</li>
+<li><code>x</code> the data payload for this replicate; in this case it is just <code>i</code></li>
+</ol>
+<p>The stem of the output file is named with the current replicate number (<code>05</code>) and the total number of replicates in the set (<code>10</code>). The file stem will always be configured to have the format <code>n</code> of <code>N</code>; but can be customized with a prefix or to use a different separator character (see below).</p>
+<p>If we had a model and data set to be simulated in replicate</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">house</span>(<span class="at">rtol =</span> <span class="fl">1e-4</span>, <span class="at">outvars =</span> <span class="st">&quot;DV&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand.ev</span>(<span class="at">amt =</span> <span class="dv">100</span>, <span class="at">ID =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p>we could use the file stream object to structure the simulation</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">lapply</span>(x, <span class="cf">function</span>(fs) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mrgsim</span>(mod, data) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">i =</span> fs<span class="sc">$</span>i)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
+<p>We have used the replicate number (<code>fs$i</code>) to tag the output of the simulation. This is a simple example to get started on the basic idea. We could have easily done the same simulation by calling</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mrgsim</span>(mod, data) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">i =</span> i)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
+<p>It would give identical results and using the file stream would have been overkill. So let’s use the file stream object to help us save these simulations to a file in an efficient and organized way.</p>
+</div>
+<div id="use-file-stream-to-create-a-data-set-on-disk" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Use file stream to create a data set on disk</h1>
+<p>To do this we’ll add two arguments to the call to <code>new_stream()</code></p>
+<ol style="list-style-type: decimal">
+<li><code>locker</code> a directory that is reserved for this set of simulation output (only)</li>
+<li><code>format</code> the output format for saving the files</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>locker <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;replicate1&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">10</span>, <span class="at">locker =</span> locker, <span class="at">format =</span> <span class="st">&quot;fst&quot;</span>)</span></code></pre></div>
+<p>Since this is a package vignette, we are saving the outputs to <code>tempdir()</code>, not something that we’d recommend in production work, where simulations should be saved locally. We also specified <code>format</code> to be <code>fst</code>, which uses the package of the same name to save the data in an efficient format.</p>
+<p>Now let’s look at the object for the 5th replicate</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">5</span>]]</span></code></pre></div>
+<pre><code>. $i
+. [1] 5
+. 
+. $file
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/replicate1/05-10.fst&quot;
+. 
+. $x
+. [1] 5
+. 
+. attr(,&quot;file_set_item&quot;)
+. [1] TRUE
+. attr(,&quot;class&quot;)
+. [1] &quot;stream_format_fst&quot; &quot;list&quot;</code></pre>
+<p>We still have <code>i</code> (the replicate number). But now <code>file</code> is populated with a complete path to the output file. What can’t be seen here is that the <code>replicate</code> directory has been created</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.exists</span>(<span class="fu">dirname</span>(x[[<span class="dv">5</span>]]<span class="sc">$</span>file))</span></code></pre></div>
+<pre><code>. [1] TRUE</code></pre>
+<p>When the file stream was created, so was the directory where the files would be saved. Details about the storage <code>locker</code> are provided below.</p>
+<p>Also notice that the object has a new attribute</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x[[<span class="dv">5</span>]])</span></code></pre></div>
+<pre><code>. [1] &quot;stream_format_fst&quot; &quot;list&quot;</code></pre>
+<p>This indicates that the file</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(x[[<span class="dv">5</span>]]<span class="sc">$</span>file)</span></code></pre></div>
+<pre><code>. [1] &quot;05-10.fst&quot;</code></pre>
+<p>will be saved in <code>fst</code> format when the time comes. <code>fst</code> a very efficient format for storing data frames in R; but you can choose other formats, like <code>feather</code> (also for data frames) or <code>qs</code> or <code>rds</code> for saving any R object.</p>
+<p>To save the <code>ith</code> replicate to its pre-defined file location, we call the function <code>write_stream()</code> inside our simulation loop</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">lapply</span>(x, <span class="cf">function</span>(fs) {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  ans <span class="ot">&lt;-</span> <span class="fu">mrgsim</span>(mod, data) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">i =</span> fs<span class="sc">$</span>i)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_stream</span>(fs, ans)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(fs<span class="sc">$</span>file)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<p>Notice in the previous that we didn’t return the data; that’s part of the strategy where we write the data to disk rather than return a potentially massive amount of data that could easily swamp our R session. But we did return the <code>location</code> of each file that we wrote out</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>out[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
+<pre><code>. [[1]]
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/replicate1/01-10.fst&quot;
+. 
+. [[2]]
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/replicate1/02-10.fst&quot;
+. 
+. [[3]]
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/replicate1/03-10.fst&quot;</code></pre>
+<p>This makes it easy to read the data back in</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fst)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">lapply</span>(out, read_fst) </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sims[[<span class="dv">8</span>]])</span></code></pre></div>
+<p><code>mrgsim.parallel</code> provides a helper function for reading in a set of <code>fst</code> files</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">internalize_fst</span>(locker)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sims)</span></code></pre></div>
+<pre><code>. tibble [4,820 × 4] (S3: tbl_df/tbl/data.frame)
+.  $ ID  : num [1:4820] 1 1 1 1 1 1 1 1 1 1 ...
+.  $ time: num [1:4820] 0 0 0.25 0.5 0.75 1 1.25 1.5 1.75 2 ...
+.  $ DV  : num [1:4820] 0 0 1.29 2.23 2.9 ...
+.  $ i   : int [1:4820] 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>By default, <code>internalize_fst</code> returns a single data frame with all of your simulations. You can also run a head of the file set</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head_fst</span>(locker, <span class="at">n =</span> <span class="dv">8</span>)</span></code></pre></div>
+<pre><code>.   ID time       DV i
+. 1  1 0.00 0.000000 1
+. 2  1 0.00 0.000000 1
+. 3  1 0.25 1.287443 1
+. 4  1 0.50 2.225213 1
+. 5  1 0.75 2.904149 1
+. 6  1 1.00 3.391513 1
+. 7  1 1.25 3.737158 1
+. 8  1 1.50 3.978021 1</code></pre>
+<p>Or get a list of the files</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fst <span class="ot">&lt;-</span> <span class="fu">list_fst</span>(locker)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>fst[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/replicate1/02-10.fst&quot;</code></pre>
+</div>
+<div id="alternate-better-file-formats" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Alternate (better) file formats</h1>
+<p><code>fst</code> is an excellent file format and very fast to read and write. But notice with the <code>internalize_fst()</code> call, we are still reading in all the data back into the R session. We don’t <em>have</em> to do that; we could have just read the first 5 files</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">list_fst</span>(locker)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="sc">%&gt;%</span> <span class="fu">lapply</span>(read_fst) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
+<p>But we want better value for the price that was paid to write the outputs to disk.</p>
+<p>This is where the <code>arrow</code> package comes in. Apache Arrow is “a cross-language development platform for in-memory data.” Basically, you can have a huge amount of data on disk in an arrow data set and work with it as if it is loaded in memory.</p>
+<p>The following examples will only be run if the arrow package is installed when this vignette is built.</p>
+<p>First, re-create the file stream with format <code>feather</code></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">10</span>, <span class="at">format =</span> <span class="st">&quot;feather&quot;</span>, <span class="at">locker =</span> locker)</span></code></pre></div>
+<p>Now, the files are ready to be stored in feather format</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(x[[<span class="dv">5</span>]]<span class="sc">$</span>file)</span></code></pre></div>
+<pre><code>. [1] &quot;05-10.feather&quot;</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x[[<span class="dv">5</span>]])</span></code></pre></div>
+<pre><code>. [1] &quot;stream_format_feather&quot; &quot;list&quot;</code></pre>
+<p>and when we re-run the simulation, we’ll have a set of <code>feather</code> files rather than <code>fst</code> files</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">lapply</span>(x, <span class="cf">function</span>(fs) {</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  ans <span class="ot">&lt;-</span> <span class="fu">mrgsim</span>(mod, data) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">i =</span> fs<span class="sc">$</span>i)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_stream</span>(fs, ans)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(fs<span class="sc">$</span>file)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<p>Notice that there is no change to the simulation code; we still call <code>write_stream()</code> and because <code>fs[[i]]</code> is set up with <code>feather</code> output, we get that method when writing.</p>
+<p>Now we don’t need a helper function to read the files; we’ll use <code>arrow::open_dataset()</code></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">open_dataset</span>(locker, <span class="at">format =</span> <span class="st">&quot;feather&quot;</span>)</span></code></pre></div>
+<p>This <code>ds</code> object is a pointer to the data; it hasn’t actually been loaded but we can take a peek at it</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ds)</span></code></pre></div>
+<pre><code>. Table
+. 6 rows x 4 columns
+. $ID &lt;double&gt;
+. $time &lt;double&gt;
+. $DV &lt;double&gt;
+. $i &lt;int32&gt;</code></pre>
+<p>Once we have the data set open, we can <code>filter</code> and <code>select</code> the rows and columns that we want, and then call <code>as_tibble()</code> to collect the results</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">filter</span>(ds, time <span class="sc">&gt;</span> <span class="dv">12</span>, i <span class="sc">&lt;</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span></code></pre></div>
+<p>Now we have only the part of the simulated data that we need to work with right now</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sims)</span></code></pre></div>
+<pre><code>. # A tibble: 6 × 4
+.      ID  time    DV     i
+.   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+. 1     1  12.2  2.83     2
+. 2     1  12.5  2.79     2
+. 3     1  12.8  2.76     2
+. 4     1  13    2.72     2
+. 5     1  13.2  2.69     2
+. 6     1  13.5  2.66     2</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(sims)</span></code></pre></div>
+<pre><code>. [1] 1728    4</code></pre>
+</div>
+<div id="manipulating-file-streams" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Manipulating file streams</h1>
+<p>In the most basic example, we created a file stream like this</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">10</span>)</span></code></pre></div>
+<p>Once the file stream is created, we can indicate the output format after the fact</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">format_stream</span>(x, <span class="st">&quot;fst&quot;</span>)</span></code></pre></div>
+<p>This will put the proper class on the <code>file_stream</code> object and set the file extension</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">3</span>]]<span class="sc">$</span>file</span></code></pre></div>
+<pre><code>. [1] &quot;03-10.fst&quot;</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x[[<span class="dv">3</span>]])</span></code></pre></div>
+<pre><code>. [1] &quot;stream_format_fst&quot; &quot;list&quot;</code></pre>
+<p>There are also functions for adding an output file path</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">locate_stream</span>(x, locker)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">2</span>]]<span class="sc">$</span>file</span></code></pre></div>
+<pre><code>. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/replicate1/02-10.fst&quot;</code></pre>
+<p><code>locate_stream()</code> comes with an argument called <code>initialize</code> which can be used to initialize the locker space if it hasn’t already been initialized or reset.</p>
+<p>Finally, you can manipulate the file extension</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">ext_stream</span>(x, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">4</span>]]<span class="sc">$</span>file</span></code></pre></div>
+<pre><code>. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/replicate1/04-10&quot;</code></pre>
+<p>Here we just removed the file extension. If you are adding a file extension, be sure to include the dot <code>(.)</code>.</p>
+</div>
+<div id="pass-objects-via-file-stream" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Pass objects via file stream</h1>
+<p>In the simple example, we just numbered each spot in the file stream object. Passing a single number will create a sequence of that length</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">100</span>)</span></code></pre></div>
+<p>Otherwise, we can create a custom sequence</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">4</span>))</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>. $i
+. [1] 2
+. 
+. $file
+. [1] &quot;02-25&quot;
+. 
+. $x
+. [1] 5
+. 
+. attr(,&quot;file_set_item&quot;)
+. [1] TRUE</code></pre>
+<p>If we have a large data set, we can chunk that up and pass that in. Illustrating with a toy example</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand.ev</span>(<span class="at">amt =</span> <span class="dv">100</span>, <span class="at">ID =</span> <span class="fu">seq</span>(<span class="dv">10</span>))</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div>
+<pre><code>.   ID time amt cmt evid
+. 1  1    0 100   1    1
+. 2  2    0 100   1    1
+. 3  3    0 100   1    1
+. 4  4    0 100   1    1
+. 5  5    0 100   1    1
+. 6  6    0 100   1    1</code></pre>
+<p>chunk the data frame into a list</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>chunked <span class="ot">&lt;-</span> <span class="fu">chunk_by_row</span>(data, <span class="at">nchunk =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>And then pass that in</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(chunked)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x)</span></code></pre></div>
+<pre><code>. [1] 5</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">3</span>]]</span></code></pre></div>
+<pre><code>. $i
+. [1] 3
+. 
+. $file
+. [1] &quot;3-5&quot;
+. 
+. $x
+.   ID time amt cmt evid
+. 5  5    0 100   1    1
+. 6  6    0 100   1    1
+. 
+. attr(,&quot;file_set_item&quot;)
+. [1] TRUE</code></pre>
+<p>Now he <code>x</code> position has only the “chunk” of data that we need for the current simulation; this prevents the entire data frame from getting passed to every worker.</p>
+</div>
+<div id="the-locker-system" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> The locker system</h1>
+<p>There are important things to know about the locker system; this is what really makes the arrow data sets work well.</p>
+<p>When you first create a file stream with a <code>locker</code> location, you need to specify a directory that does not exist; if the directory exists, you’ll get an error.</p>
+<p>Once you create a locker space, that space is reserved for storing output files and should <strong>only</strong> be used for storing files that are saved using <code>write_stream()</code>. The locker space is marked by a hidden file that tells <code>mrgsim.parallel</code> that this is a locker space</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">3</span>, <span class="at">locker =</span> locker)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(locker, <span class="at">all.files =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>. [1] &quot;.&quot;                           &quot;..&quot;                         
+. [3] &quot;.mrgsim-parallel-locker-dir&quot;</code></pre>
+<p>Because this is a marked and reserved space, whenever the file stream is initiated, the locker space is <strong>completely</strong> cleared of files. That is to say, all the files in the locker space will be blown away at the time the file stream is created or re-created. To say it another way, <code>new_stream()</code> called with a locker creates the locker space the first time it is called and <strong>completely clears the space</strong> at any subsequent call with that locker name. This is really important to remember that the process renews / resets at the time that <code>new_stream()</code> is called; it is equivalent to over writing existing files except that it happens in two steps: first all existing files are removed and then new files are created. Thus, the locker world works mainly in terms of directories rather than files (although obviously files are also involved).</p>
+<p><strong>WHY?</strong> The reason for this is to be able to support arrow data sets. Using <code>arrow::open_dataset(lockername)</code> is a very efficient way to access very large data stored on disk. In order for this to work, all of the files in the directory must be contributing members of that data set. The only way to do this is to reset the data set space whenever the data set is re-written and that happens at the time the file set is created.</p>
+<div id="safety-considerations" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Safety considerations</h2>
+<p>Two approached can be taken to secure existing simulations: create a saved “version” or make the locker not resettable.</p>
+<div id="versions" class="section level3" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Versions</h3>
+<p>To save a version of some simulations, call <code>version_locker()</code></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">version_locker</span>(locker, <span class="at">version =</span> <span class="st">&quot;v000&quot;</span>)</span></code></pre></div>
+<p>This creates a new directory named according to the existing locker name, but with a “version” tag attached, and copies all the locker files to this new directory. So if the locker is named</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(locker)</span></code></pre></div>
+<pre><code>. [1] &quot;replicate1&quot;</code></pre>
+<p>then the version would be named</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(y)</span></code></pre></div>
+<pre><code>. [1] &quot;replicate1-v000&quot;</code></pre>
+<p>See the help topic <code>?version_locker</code> for more options around this versioning process. New versions are not automatically incremented (e.g. “locker-001”, “locker-002”) by design. The intent behind the locker system is to create a re-writable space. Versioning an existing locker is just a convenient way to stash existing simulations under a similar name. Note that you can also create a new version at your call to <code>new_stream()</code></p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">100</span>, <span class="at">locker =</span> <span class="st">&quot;existing/locker-v2&quot;</span>)</span></code></pre></div>
+<p>Going forward, simulations will be saved to “version 2” of a locker location that already exists. There is nothing special about this setup; just some creativity in naming output directories.</p>
+<p>Caution is advised: the locker system was created to save very large simulation outputs; by continuously creating new versions, you could quickly overrun your disk space. This should be used with care.</p>
+</div>
+<div id="prevent-reset" class="section level3" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Prevent reset</h3>
+<p>To prevent the locker from being reset, use <code>noreset_locker()</code>; this removes the hidden file designating the directory as a valid locker space and prevents it from being cleared.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">5</span>, <span class="at">locker =</span> locker)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">5</span>, <span class="at">locker =</span> locker)</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">5</span>, <span class="at">locker =</span> locker)</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="fu">noreset_locker</span>(locker)</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;foo&quot;</span>, <span class="at">file =</span> <span class="fu">file.path</span>(locker, <span class="st">&#39;foo.txt&#39;</span>))</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(<span class="fu">new_stream</span>(<span class="dv">5</span>, <span class="at">locker =</span> locker))</span></code></pre></div>
+<pre><code>. Error in clear_locker(where, locker_path, pattern) : 
+.   the dataset directory exists, but doesn&#39;t appear to be a valid locker location; please manually remove the folder or specify a new folder and try again.</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(locker)</span></code></pre></div>
+<pre><code>. [1] &quot;foo.txt&quot;</code></pre>
+<p>If you <em>really</em> want to be safe, you can disable the resetting of the locker space immediately after creating it</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">new_stream</span>(<span class="dv">5</span>, <span class="at">locker =</span> locker)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">noreset_locker</span>(locker)</span></code></pre></div>
+<p>The next time you try to reset this particular locker space, you will be denied and an error will be generated. Only use this option when safety is your number one priority; it will be inconvenient because you will always need to manually clean up the locker space or generate new locations every time the simulations are re-run.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
