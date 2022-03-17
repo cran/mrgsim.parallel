@@ -1,7 +1,7 @@
 Package: mrgsim.parallel
 Type: Package
 Title: Simulate with 'mrgsolve' in Parallel
-Version: 0.2.0
+Version: 0.2.1
 Author: Kyle Baron
 Maintainer: Kyle Baron <kylebtwin@imap.cc>
 Description: Simulation from an 'mrgsolve' 
@@ -20,6 +20,6 @@ RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 Language: en-US
 NeedsCompilation: no
-Packaged: 2022-01-30 06:00:25 UTC; kyleb
+Packaged: 2022-03-17 19:06:16 UTC; kyleb
 Repository: CRAN
-Date/Publication: 2022-01-30 06:10:02 UTC
+Date/Publication: 2022-03-17 19:50:05 UTC

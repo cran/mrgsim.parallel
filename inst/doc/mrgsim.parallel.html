@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2022-01-30" />
+<meta name="date" content="2022-03-17" />
 
 <title>Get started</title>
 
@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Get started</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-01-30</h4>
+<h4 class="date">2022-03-17</h4>
 
 
 <div id="TOC">
@@ -196,13 +196,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>and then a data frame with individual level parameters (in this case, we’ll simulate a bunch of weights)</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>idata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">WT =</span> <span class="fu">runif</span>(<span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">140</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(idata)</span></code></pre></div>
-<pre><code>.         WT
-. 1 93.81797
-. 2 45.57529
-. 3 46.62538
-. 4 50.94845
-. 5 42.16565
-. 6 75.81365</code></pre>
+<pre><code>.          WT
+. 1  49.18584
+. 2  51.30360
+. 3  82.85262
+. 4 131.22516
+. 5 118.51518
+. 6  87.48769</code></pre>
 <p>Then simulate</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">mrgsim_ei</span>(mod, e, idata)</span></code></pre></div>
 <p>This already runs very fast. But let’s parallelize it anyway. First, use <code>fu_mrgsim_ei()</code></p>
@@ -241,16 +241,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> out<span class="sc">$</span><span class="fu">get_result</span>()</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>files</span></code></pre></div>
 <pre><code>. [[1]]
-. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/foo/bg-1-4.fst&quot;
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpuJ6pZt/foo/bg-1-4.fst&quot;
 . 
 . [[2]]
-. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/foo/bg-2-4.fst&quot;
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpuJ6pZt/foo/bg-2-4.fst&quot;
 . 
 . [[3]]
-. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/foo/bg-3-4.fst&quot;
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpuJ6pZt/foo/bg-3-4.fst&quot;
 . 
 . [[4]]
-. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpwaXnLz/foo/bg-4-4.fst&quot;</code></pre>
+. [1] &quot;/var/folders/5w/2ky5lwcj1zq7kyk4c3zg3zpw0000gp/T//RtmpuJ6pZt/foo/bg-4-4.fst&quot;</code></pre>
 <p>We can read the data back in with <code>fst::read_fst()</code></p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fst)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">lapply</span>(files, read_fst)</span>
