@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(comment = '.', warning = FALSE, message = FALSE)
 
 ## -----------------------------------------------------------------------------
@@ -15,21 +15,21 @@ mod <- house(end = 72)
 ## -----------------------------------------------------------------------------
 outx <- mrgsim_d(mod, data, output = "df")
 
-## ---- eval = FALSE------------------------------------------------------------
-#  future::plan(future::multisession, workers = 2L)
+## ----eval = FALSE-------------------------------------------------------------
+# future::plan(future::multisession, workers = 2L)
 
 ## -----------------------------------------------------------------------------
 out <- fu_mrgsim_d(mod, data, .seed = 123, nchunk = 6)
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 future::plan(future::sequential)
 
-## ---- eval = FALSE------------------------------------------------------------
-#  out <- mc_mrgsim_d(mod, data, mc.cores = 2, .seed = 123,  nchunk = 6)
+## ----eval = FALSE-------------------------------------------------------------
+# out <- mc_mrgsim_d(mod, data, mc.cores = 2, .seed = 123,  nchunk = 6)
 
-## ---- eval = FALSE, warning = FALSE-------------------------------------------
-#  future::plan(future::multicore)
-#  out <- fu_mrgsim_d(mod, data, .seed = 123, nchunk = 6)
+## ----eval = FALSE, warning = FALSE--------------------------------------------
+# future::plan(future::multicore)
+# out <- fu_mrgsim_d(mod, data, .seed = 123, nchunk = 6)
 
 ## -----------------------------------------------------------------------------
 e <- ev(amt = 100, ii = 24, addl = 27)
@@ -41,13 +41,13 @@ head(idata)
 ## -----------------------------------------------------------------------------
 out <- mrgsim_ei(mod, e, idata)
 
-## ---- eval = FALSE------------------------------------------------------------
-#  future::plan(future::multisession, workers = 2L)
-#  
-#  out <- fu_mrgsim_ei(mod, e, idata,.seed = 123, nchunks = 6)
+## ----eval = FALSE-------------------------------------------------------------
+# future::plan(future::multisession, workers = 2L)
+# 
+# out <- fu_mrgsim_ei(mod, e, idata,.seed = 123, nchunks = 6)
 
-## ---- eval = FALSE------------------------------------------------------------
-#  out <- mc_mrgsim_ei(mod, e, idata, .seed = 123, nchunks = 6, mc.cores = 2)
+## ----eval = FALSE-------------------------------------------------------------
+# out <- mc_mrgsim_ei(mod, e, idata, .seed = 123, nchunks = 6, mc.cores = 2)
 
 ## -----------------------------------------------------------------------------
 out <- bg_mrgsim_d(mod, data, nchunk = 2)

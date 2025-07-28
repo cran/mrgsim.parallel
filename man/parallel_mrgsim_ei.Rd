@@ -57,9 +57,10 @@ mc_mrgsim_ei(
 \item{idata}{An idata set of parameters, one per simulation unit (individual);
 see \code{\link[mrgsolve:idata_set]{mrgsolve::idata_set()}}.}
 
-\item{nchunk}{Number of chunks in which to split the data set}
+\item{nchunk}{Number of chunks in which to split the data set; chunking will
+be based on the \code{ID} column, which is required in \code{data}.}
 
-\item{...}{Passed to \code{\link[=mrgsim_d]{mrgsim_d()}}.}
+\item{...}{Passed to \code{\link[mrgsolve:mrgsim_variants]{mrgsolve::mrgsim_d()}}.}
 
 \item{.as_list}{If \code{TRUE} a list is return; otherwise (default) a data frame}
 
@@ -69,7 +70,7 @@ be (1) the simulated output (2) the model object.}
 \item{.dry}{If \code{TRUE} neither the simulation nor the post processing will
 be done.}
 
-\item{.seed}{Passed to \code{\link[=future_lapply]{future_lapply()}} as \code{future.seed}.}
+\item{.seed}{Passed to \code{\link[future.apply:future_lapply]{future.apply::future_lapply()}} as \code{future.seed}.}
 
 \item{.parallel}{if \code{FALSE}, the simulation will not be parallelized; this is
 intended for debugging and testing use only.}

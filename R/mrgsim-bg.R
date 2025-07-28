@@ -27,12 +27,13 @@ bg_sim_env <- function() {
 #' @param .locker A directory for saving simulated data; use this to collect 
 #' results from several different runs in a single folder.
 #' @param .tag A name to use for the current run; results are saved under 
-#' `.tag` in `.path` folder.
+#' `.tag` in `.locker` folder.
 #' @param .format The output format for saving simulations; using format
 #' `fst` will allow saved results to be read with [fst::read_fst()]; using
 #' format `arrow` will allow saved results to be read with 
-#' [arrow::open_dataset()] with `format = "feather"`; note that `fst` is 
-#' installed with `mrgsim.parallel` but `arrow` may need explicit installation.
+#' [arrow::open_dataset()] with `format = "feather"` or `format = "parquet"`; 
+#' note that `fst` is installed with `mrgsim.parallel` but `arrow` may need 
+#' explicit installation.
 #' @param .wait If `FALSE`, the function returns immediately; if `TRUE`, then 
 #' wait until the background job is finished.
 #' @param .seed A `numeric` value used to set the seed for the simulation; 
@@ -75,7 +76,7 @@ bg_sim_env <- function() {
 #'   
 #' 
 #' @return 
-#' An `r_process` object; see [callr::r_bg()]. Call `process$get_resuilt()` to 
+#' An `r_process` object; see [callr::r_bg()]. Call `process$get_result()` to 
 #' get the actual result (see `details`). If a `.locker` path is supplied, 
 #' the simulated data is saved to disk and a list of file names is returned. 
 #' 
@@ -86,13 +87,12 @@ bg_sim_env <- function() {
 bg_mrgsim_d <- function(mod, data, nchunk = 1,   
                         ..., 
                         .locker = NULL, .tag = NULL, 
-                        .format = c("fst", "feather", "rds"),
+                        .format = c("fst", "feather", "parquet", "rds"),
                         .wait = TRUE, .seed = FALSE, 
                         .cores = 1, .plan = NULL) {
   
   .format <- match.arg(.format)
   .path <- NULL  
-  notag <- is.null(.tag)
   Plan <- list(workers = .cores)
   create_locker <- is.character(.locker)
   
@@ -100,23 +100,11 @@ bg_mrgsim_d <- function(mod, data, nchunk = 1,
     Plan$strategy <- .plan
     if(.cores==1) Plan$workers <- NULL
   }
-  if(notag) {
-    .tag <- mod@model  
-  }
-  if(is.character(.locker)) {
-    if(.format == "arrow" && !arrow_installed()) {
-      stop("The arrow package must be installed to complete this task.")
+  if(create_locker) {
+    .path <- .locker
+    if(is.character(.tag)) {
+      .path <- file.path(.locker, .tag)
     }
-    if(notag) {
-      .tag <- basename(.locker)
-    }
-    .path <- dirname(.locker)
-  }
-  if(!is.character(.tag)) {
-    stop("`.tag` must have type character.")  
-  }
-  if(length(.tag) != 1) {
-    stop("`.tag` must have length 1.")  
   }
   if(is.data.frame(data)) {
     if(nchunk <= 1) {
@@ -131,7 +119,7 @@ bg_mrgsim_d <- function(mod, data, nchunk = 1,
   
   if(create_locker) {
     ext <- ifelse(substr(.format, 1, 1)=='.', .format, paste0(".", .format))
-    locker_loc <- setup_locker(.path, .tag)
+    locker_loc <- setup_locker(dirname(.path), basename(.path))
     output_paths <- file_set(
       n = length(data),
       prefix = "bg", 
@@ -227,6 +215,13 @@ bg_mrgsim_d_impl <- function(data, mod, output = NULL, .seed = NULL,
   }
   if(.format == "feather") { #nocov start
     arrow::write_feather( 
+      x = out,
+      sink = output
+    )
+    return(output)
+  } 
+  if(.format == "parquet") { #nocov start
+    arrow::write_parquet( 
       x = out,
       sink = output
     )

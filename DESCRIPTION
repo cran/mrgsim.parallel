@@ -1,8 +1,10 @@
 Package: mrgsim.parallel
 Type: Package
 Title: Simulate with 'mrgsolve' in Parallel
-Version: 0.2.1
-Author: Kyle Baron
+Version: 0.3.0
+Authors@R: c(
+    person("Kyle", "Baron", "", "kylebtwin@imap.cc", c("aut", "cre"))
+    )
 Maintainer: Kyle Baron <kylebtwin@imap.cc>
 Description: Simulation from an 'mrgsolve' 
     <https://cran.r-project.org/package=mrgsolve> model using a parallel backend.  
@@ -16,10 +18,11 @@ Suggests: testthat, arrow, qs, knitr, rmarkdown
 Encoding: UTF-8
 URL: https://github.com/kylebaron/mrgsim.parallel
 BugReports: https://github.com/kylebaron/mrgsim.parallel/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 Language: en-US
 NeedsCompilation: no
-Packaged: 2022-03-17 19:06:16 UTC; kyleb
+Packaged: 2025-07-28 00:38:21 UTC; kyleb
+Author: Kyle Baron [aut, cre]
 Repository: CRAN
-Date/Publication: 2022-03-17 19:50:05 UTC
+Date/Publication: 2025-07-28 12:20:02 UTC

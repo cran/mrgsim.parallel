@@ -11,7 +11,7 @@ bg_mrgsim_d(
   ...,
   .locker = NULL,
   .tag = NULL,
-  .format = c("fst", "feather", "rds"),
+  .format = c("fst", "feather", "parquet", "rds"),
   .wait = TRUE,
   .seed = FALSE,
   .cores = 1,
@@ -23,7 +23,8 @@ bg_mrgsim_d(
 
 \item{data}{Data set to simulate; see \code{\link[mrgsolve:data_set]{mrgsolve::data_set()}}.}
 
-\item{nchunk}{Number of chunks in which to split the data set}
+\item{nchunk}{Number of chunks in which to split the data set; chunking will
+be based on the \code{ID} column, which is required in \code{data}.}
 
 \item{...}{Arguments passed to \code{\link[mrgsolve:mrgsim]{mrgsolve::mrgsim()}}.}
 
@@ -31,13 +32,14 @@ bg_mrgsim_d(
 results from several different runs in a single folder.}
 
 \item{.tag}{A name to use for the current run; results are saved under
-\code{.tag} in \code{.path} folder.}
+\code{.tag} in \code{.locker} folder.}
 
 \item{.format}{The output format for saving simulations; using format
 \code{fst} will allow saved results to be read with \code{\link[fst:write_fst]{fst::read_fst()}}; using
 format \code{arrow} will allow saved results to be read with
-\code{\link[arrow:open_dataset]{arrow::open_dataset()}} with \code{format = "feather"}; note that \code{fst} is
-installed with \code{mrgsim.parallel} but \code{arrow} may need explicit installation.}
+\code{\link[arrow:open_dataset]{arrow::open_dataset()}} with \code{format = "feather"} or \code{format = "parquet"};
+note that \code{fst} is installed with \code{mrgsim.parallel} but \code{arrow} may need
+explicit installation.}
 
 \item{.wait}{If \code{FALSE}, the function returns immediately; if \code{TRUE}, then
 wait until the background job is finished.}
@@ -53,7 +55,7 @@ simulation sequentially.}
 parallelization will be handled by the \code{future} package.}
 }
 \value{
-An \code{r_process} object; see \code{\link[callr:r_bg]{callr::r_bg()}}. Call \code{process$get_resuilt()} to
+An \code{r_process} object; see \code{\link[callr:r_bg]{callr::r_bg()}}. Call \code{process$get_result()} to
 get the actual result (see \code{details}). If a \code{.locker} path is supplied,
 the simulated data is saved to disk and a list of file names is returned.
 }
@@ -71,7 +73,7 @@ data are returned; when an output \code{.locker} is specified, the path to
 the \code{fst} file on disk is returned.  The \code{fst} files  should be read with
 \code{\link[fst:write_fst]{fst::read_fst()}}. When the results are not saved to \code{.locker}, you will
 get a single data frame when \code{nchunk} is 1 or a list of data frames when
-\code{nchunk} is greater than 1. It is safest to call \code{\link[dplyr:bind]{dplyr::bind_rows()}} or
+\code{nchunk} is greater than 1. It is safest to call \code{\link[dplyr:bind_rows]{dplyr::bind_rows()}} or
 something equivalent on the result if you are expecting data frame.
 }
 \examples{

@@ -15,14 +15,15 @@
 #'
 #' @param mod The mrgsolve model object see [mrgsolve::mrgmod-class].
 #' @param data Data set to simulate; see [mrgsolve::data_set()].
-#' @param nchunk Number of chunks in which to split the data set
-#' @param ... Passed to [mrgsim_d()].
+#' @param nchunk Number of chunks in which to split the data set; chunking will 
+#' be based on the `ID` column, which is required in `data`.
+#' @param ... Passed to [mrgsolve::mrgsim_d()].
 #' @param .as_list If `TRUE` a list is return; otherwise (default) a data frame
 #' @param .p Post processing function executed on the worker; arguments should
 #' be (1) the simulated output (2) the model object.
 #' @param .dry If `TRUE` neither the simulation nor the post processing will
 #' be done.
-#' @param .seed Passed to [future_lapply()] as `future.seed`.
+#' @param .seed Passed to [future.apply::future_lapply()] as `future.seed`.
 #' @param .parallel if `FALSE`, the simulation will not be parallelized; this is
 #' intended for debugging and testing use only.
 #'

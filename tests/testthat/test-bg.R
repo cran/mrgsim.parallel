@@ -1,4 +1,6 @@
 library(testthat)
+library(dplyr)
+library(mrgsim.parallel)
 
 context("background simulation")
 
@@ -10,6 +12,7 @@ data <- mrgsolve::expand.ev(
   addl = 6
 )
 data$dose <- data$amt
+clean <- function(x) gsub("[[:punct:]]", "-", x, perl = TRUE)
 
 test_that("bg simulation has same result as fg", { 
   bg <- bg_mrgsim_d(
@@ -130,4 +133,84 @@ test_that("bg simulate parallel", {
   df <- bg$get_result()
   expect_is(df, "list")
   expect_length(df, 2)
+})
+
+test_that("bg locker, no tag", {
+  loc <- file.path(tempdir(), "foo")
+  bg <- bg_mrgsim_d(
+    mod, 
+    data, 
+    .locker = loc,
+    .format = "fst",
+    .wait = TRUE, 
+    .seed = 123256L, 
+    nchunk = 2, 
+    .plan = "sequential"
+  )
+  files <- bg$get_result()
+  expect_equal(
+    clean(dirname(files[[1]])), 
+    clean(file.path(tempdir(), "foo"))
+  )
+  bg2 <- bg_mrgsim_d(
+    mod, 
+    data, 
+    .locker = loc,
+    .format = "fst",
+    .wait = TRUE, 
+    .seed = 123256L, 
+    nchunk = 2, 
+    .plan = "sequential"
+  )
+  files2 <- bg2$get_result()
+  expect_identical(files, files2)
+  unlink(temp_ds("foo"), recursive = TRUE)
+})
+
+test_that("bg locker and tag", {
+  loc <- file.path(tempdir(), "foo")
+  bg <- bg_mrgsim_d(
+    mod, 
+    data, 
+    .locker = loc,
+    .format = "fst",
+    .wait = TRUE, 
+    .seed = 123256L, 
+    nchunk = 2, 
+    .plan = "sequential"
+  )
+  files <- bg$get_result()[[1]]
+  expect_equal(
+    clean(dirname(files[1])), 
+    clean(file.path(tempdir(), "foo"))
+  )
+  bg <- bg_mrgsim_d(
+    mod, 
+    data, 
+    .locker = loc,
+    .tag = "run2", 
+    .format = "fst",
+    .wait = TRUE, 
+    .seed = 123256L, 
+    nchunk = 2, 
+    .plan = "sequential"
+  )
+  files <- bg$get_result()
+  expect_equal(
+    clean(dirname(files[[1]])), 
+    clean(file.path(tempdir(), "foo", "run2"))
+  )  
+  bg2 <- bg_mrgsim_d(
+    mod, 
+    data, 
+    .locker = loc,
+    .tag = "run2", 
+    .format = "fst",
+    .wait = TRUE, 
+    .seed = 123256L, 
+    nchunk = 2, 
+    .plan = "sequential"
+  )
+  files2 <- bg2$get_result()
+  expect_identical(files, files2)
 })
